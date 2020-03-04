@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  <script data-require="babel@*" data-semver="5.6.15" src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.js"></script>
+<script data-require="react@*" data-semver="0.13.3" src="https://fb.me/react-0.14.3.min.js"></script>
+<style>
+#img
+{
+  display: none;
+  height: 50px;
+  width: 50px;
+}
+
+.table
+{
+  border:1px solid black;
+
+  width: 50%;
+  text-align: center;
+  margin: 0 auto;
+
+}
+.table tr,.table th 
+{
+  border-bottom:1px solid black;
+}
+.table tr td
+{
+   border:0px solid black;
+}
+.table thead th
+{
+    max-width: 750px;
+  border:0px solid black;
+    margin: 0 auto;
+}
+h1{
+      text-align: center;
+    padding: 30px;
+}
+thead{
+border:0px solid black;
+
+}
+
+
+.heading
+{
+ font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+}
+
+#notes
+{
+  margin-left: 40px;
+}
+
+#date
+{
+   margin-left: 15px;
+}
+.chkboxes :first
+{
+margin-left:-25px;
+}
+
+</style>
+
+  <body style="background-color: cyan">
+  
+    <div id="mydiv"></div>
+
+    <script type="text/babel">
+
+    var GetResult = React.createClass({
+      getInitialState: function () {
+        return {
+          course: '',
+        };
+      },
+      onSiteChanged: function (e) {
+        this.setState({
+          course: e.currentTarget.value
+          });
+
+
+
+
+      },
+      onSubmits:function(e)
+      {
+
+
+document.getElementById("img").style.display='block';
+setTimeout(function() {
+document.getElementById("img").style.display='none';
+
+         alert("Your course has been successfully registered.");
+
+ },3000);
+      
+
+      },
+
+      onDatechange:function(e)
+      {
+        
+        if(e.target.value=='2019-12-20' || e.target.value=='2020-01-15' ||  e.target.value=='2020-02-01')
+        {
+          
+        }
+        else
+        {
+          alert('Your selected course and subject is not offered beginning from your selected date');
+        }
+        
+
+
+      },
+      onNotechange:function(e)
+      {
+        
+      var test= e.target.value.length;
+    
+      if(test<20 || test>500)
+        {
+          alert('Minimum 20 words and maximum 500 words only');
+
+        }
+
+
+
+      },
+      
+      render: function(){
+
+              var conditions,condition1,condition2,condition3;
+              if (this.state.course=='Technical Writing') {
+               condition1 = 'Short Reports';
+                 condition2='Annual Report'
+                 condition3='Presentations';
+              }
+               else if(this.state.course=='English Literature') {
+                conditions ='1) Poetry 2)Short Stories 3) Drama  ';
+condition1 = 'Poetry';
+                 condition2='Short Stories'
+                 condition3='Drama';
+                
+              }
+              else if(this.state.course=='Computer Sciences') {
+                conditions ='1) Web Development 2)Desktop Software Development 3) Research and Analysis  ';
+                condition1 = 'Web Development';
+                 condition2='Desktop Software Development'
+                 condition3='Research and Analysis';
+              }
+              else
+              {
+               conditions =''; 
+               condition1 = '';
+                 condition2=''
+                 condition3='';
+              }
+
+
+           var resultRows = this.props.data.map(function(result){
+               return (
+                  
+                    
+                       
+                            <td><input required type="radio" name="course_name" 
+                                       value={result.COURSE_NAME} 
+                                       checked={this.state.course === result.COURSE_NAME} 
+                                       onChange={this.onSiteChanged} />{result.COURSE_NAME}</td>                            
+               
+               );
+           }, this);
+
+
+
+           return (
+               <table className="table">
+                   <thead>
+                       <tr>
+                           <td class="heading">Select Course</td>                           
+                             {resultRows}
+                       </tr>
+
+                        <tr>   
+             <td class="heading">Subject</td>          
+<td>
+  <input  class="chkboxes" type="checkbox" value={condition1}/>{condition1}
+</td>
+<td>
+  <input  class="chkboxes" type="checkbox" value={condition2}/>{condition2}
+</td>
+<td>
+  <input class="chkboxes" type="checkbox" value={condition3}/>{condition3}
+</td>
+</tr>
+                   </thead>
+                    <tbody>
+                    <form method="post">
+                        <legend><h1>Registration Form</h1></legend>
+                  
+
+
+<tr>
+  <td class="heading">Start Date</td>
+  <td> &nbsp; <input id="date" required type="date" name="date" onChange={this.onDatechange} /></td>
+  <td></td>
+  <td></td>
+</tr>
+
+<tr>
+  <td class="heading">Additional Notes</td>
+  <td><textarea id="notes" onBlur={this.onNotechange} name="additional_notes"></textarea></td>
+  <td></td>
+  <td></td>
+</tr>
+  
+<tr>
+
+             
+
+            
+
+
+
+
+</tr>
+
+<tr>
+  <td></td>
+  <td><input class="btn btn-primary" type="button" value="submit" onClick={this.onSubmits}/></td>
+  <td><img id="img"  src="https://cdn.shopify.com/s/files/1/0337/7030/7724/files/e40783e3-5a93-4cac-9d77-b622f76ecb03.gif?v=1583231077" /></td>
+  <td></td>
+</tr>
+
+   </form>
+ </tbody> 
+                   <tfoot>
+                     
+
+
+                   </tfoot>
+               </table>
+           );
+      }
+    });
+
+var App = React.createClass({
+  render: function(){
+    return <div><GetResult data={[
+      {COURSE_NAME: 'Technical Writing'},
+      {COURSE_NAME: 'English Literature'},
+       {COURSE_NAME: 'Computer Sciences'}
+    ]}/></div>
+  }
+});
+
+React.render(<App />, document.getElementById('mydiv'));
+</script>
+  </body>
+</html>
